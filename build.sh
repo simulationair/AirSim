@@ -60,15 +60,15 @@ if [ "$(uname)" == "Darwin" ]; then
     #export CC=/usr/local/opt/llvm@8/bin/clang
     #export CXX=/usr/local/opt/llvm@8/bin/clang++
     #now pick up whatever setup.sh installs
-    export CC="$(brew --prefix)/opt/llvm/bin/clang"
-    export CXX="$(brew --prefix)/opt/llvm/bin/clang++"
+    export CC="/usr/bin/clang"
+    export CXX="/usr/bin/clang++"
 else
     if $gcc; then
-        export CC="gcc-12"
-        export CXX="g++-12"
+        export CC="gcc-11"
+        export CXX="g++-11"
     else
-        export CC="clang-12"
-        export CXX="clang++-12"
+        export CC="clang-11"
+        export CXX="clang++-11"
     fi
 fi
 
