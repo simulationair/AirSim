@@ -8,13 +8,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-22.04]
 
     steps:
       - uses: actions/checkout@v3
 
+      # fix: cannot find -lunwind: No such file or directory
+      # https://blog.csdn.net/weixin_52000358/article/details/146281075
       - name: Setup
-        run: ./setup.sh
+        run: |
+          sudo apt-get -y install libunwind-dev libstdc++-12-dev
+          ./setup.sh
 
       - name: Build AirLib
         run: ./build.sh
@@ -33,7 +37,7 @@ jobs:
           catkin build -DCMAKE_C_COMPILER=gcc-8 -DCMAKE_CXX_COMPILER=g++-8
       
       - name: Build ROS2 Wrapper
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           chmod +x ./tools/install_ros2_deps.sh
           ./tools/install_ros2_deps.sh
